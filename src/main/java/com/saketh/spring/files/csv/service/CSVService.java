@@ -49,5 +49,9 @@ public class CSVService {
   public List<Inventory> getInventoriesBySupplierId(String suppliersList,String code,Pageable pageable){
     return csvDao.findBySupplierId(suppliersList,code,pageable);
   }
+
+public List<Inventory> getInventoriesByFilter(String suppliers, String code, String expiry, Pageable paging) {
+  return csvDao.findByFilter(suppliers,code,expiry,paging);
+}
   
 }

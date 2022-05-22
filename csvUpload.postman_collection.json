@@ -1,0 +1,202 @@
+{
+	"info": {
+		"_postman_id": "dabe1567-6902-44b8-a8cc-3ac207027ffb",
+		"name": "csvUpload",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "uploadCSV",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/nanna/Downloads/Sample Inventory.csv"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/csv/upload",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"csv",
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getInventories",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/csv/inventories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"csv",
+						"inventories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "downloadCSV",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/csv/download",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"csv",
+						"download"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getInventoriesBySupplierId",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "suppliers",
+							"value": "\"MANKIND PHARMA LTD HYDERABAD\",\"PRADEEP MEDICAL AGENCIES      HANAMKONDA\"",
+							"type": "default"
+						},
+						{
+							"key": "code",
+							"value": "",
+							"type": "default"
+						},
+						{
+							"key": "page",
+							"value": "1",
+							"type": "default",
+							"disabled": true
+						},
+						{
+							"key": "size",
+							"value": "100",
+							"type": "default"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/csv/inventoriesBySupplierId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"csv",
+						"inventoriesBySupplierId"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getInventoriesByExpiry",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "suppliers",
+							"value": "\"MANKIND PHARMA LTD HYDERABAD\",\"PRADEEP MEDICAL AGENCIES      HANAMKONDA\"",
+							"type": "default"
+						},
+						{
+							"key": "code",
+							"value": "",
+							"type": "default"
+						},
+						{
+							"key": "page",
+							"value": "",
+							"type": "default",
+							"disabled": true
+						},
+						{
+							"key": "size",
+							"value": "100",
+							"type": "default"
+						},
+						{
+							"key": "expiry",
+							"value": "",
+							"type": "default"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/csv/inventoriesByFilter",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"csv",
+						"inventoriesByFilter"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

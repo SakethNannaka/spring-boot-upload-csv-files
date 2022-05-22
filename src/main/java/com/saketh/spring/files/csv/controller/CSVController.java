@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-
 @CrossOrigin("http://localhost:8081")
 @Controller
 @RequestMapping("/api/csv")
@@ -35,7 +34,7 @@ public class CSVController {
   @Autowired
   CSVService fileService;
 
-	private static final Logger logger = LogManager.getLogger(CSVController.class);
+  private static final Logger logger = LogManager.getLogger(CSVController.class);
 
   @PostMapping("/upload")
   public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
@@ -49,7 +48,7 @@ public class CSVController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
       } catch (Exception e) {
         message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-        logger.error("Exception in uploadFile :{}",e);
+        logger.error("Exception in uploadFile :{}", e);
         return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
       }
     }
@@ -74,12 +73,32 @@ public class CSVController {
   }
 
   @GetMapping("/inventoriesBySupplierId")
-  public ResponseEntity<List<Inventory>> getInventoriesBySupplierId(@RequestParam String suppliers,@RequestParam String code, @RequestParam(defaultValue = "0") int page,
-  @RequestParam(defaultValue = "3") int size) {
+  public ResponseEntity<List<Inventory>> getInventoriesBySupplierId(@RequestParam String suppliers,
+      @RequestParam String code, @RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "100") int size) {
     try {
-      logger.info("suppliers :{},code :{},page :{},size :{}",suppliers,code,page,size);
+      logger.info("suppliers :{},code :{},page :{},size :{}", suppliers, code, page, size);
       Pageable paging = PageRequest.of(page, size);
-      List<Inventory> inventories = fileService.getInventoriesBySupplierId(suppliers,code,paging);
+      List<Inventory> inventories = fileService.getInventoriesBySupplierId(suppliers, code, paging);
+
+      if (inventories.isEmpty()) {
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+      }
+
+      return new ResponseEntity<>(inventories, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @GetMapping("/inventoriesByFilter")
+  public ResponseEntity<List<Inventory>> getInventoriesBySupplierId(@RequestParam String suppliers,
+      @RequestParam String code, @RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "100") int size, @RequestParam String expiry) {
+    try {
+      logger.info("suppliers :{},code :{},expiry :{},page :{},size :{}", suppliers, code, expiry, page, size);
+      Pageable paging = PageRequest.of(page, size);
+      List<Inventory> inventories = fileService.getInventoriesByFilter(suppliers, code, expiry, paging);
 
       if (inventories.isEmpty()) {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
